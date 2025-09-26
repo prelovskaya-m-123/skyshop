@@ -1,5 +1,7 @@
 package model.search;
 
+import java.util.UUID;
+
 public interface Searchable {
 
     String getSearchTerm();
@@ -8,7 +10,10 @@ public interface Searchable {
 
     String getName();
 
+    UUID getId();
+
     default String getStringRepresentation() {
         return getName() + " — " + getContentType();
     }
+
 }

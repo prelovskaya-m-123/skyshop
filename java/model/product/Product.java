@@ -3,16 +3,24 @@ package model.product;
 import model.search.Searchable;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public abstract class Product implements Searchable {
 
     private final String name;
+    private final UUID id;
 
-    public Product(String name) {
+    public Product(String name, UUID id) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Название товара не может быть пустым или состоять только из пробелов");
         }
         this.name = name;
+        this.id = id;
+    }
+
+    @Override
+    public UUID getId() {
+        return id;
     }
 
     @Override

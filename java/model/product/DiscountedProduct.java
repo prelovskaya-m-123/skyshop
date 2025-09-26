@@ -1,11 +1,13 @@
 package model.product;
 
+import java.util.UUID;
+
 public class DiscountedProduct extends Product {
     private int basePrice;
     private int discountInWholePercentages;
 
-    public DiscountedProduct(String name, int basePrice, int discountInWholePercentages) {
-        super(name);
+    public DiscountedProduct(String name, int basePrice, int discountInWholePercentages, UUID id) {
+        super(name, id);
         if (basePrice <= 0){
             throw new IllegalArgumentException("Базовая цена продукта должна быть строго больше 0");
         }
@@ -51,4 +53,10 @@ public class DiscountedProduct extends Product {
     public String getFormattedInfo() {
         return "<" + getName() + ">" + ":" + "<" + getPrice() + ">" + "(" + "<" + discountInWholePercentages + ">" + "%" + ")";
     }
+
+    @Override
+    public UUID getId() {
+        return super.getId();
+    }
 }
+
