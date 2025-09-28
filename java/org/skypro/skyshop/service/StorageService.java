@@ -1,13 +1,14 @@
-package service;
+package org.skypro.skyshop.service;
 
+import org.skypro.skyshop.model.search.Searchable;
 import org.springframework.stereotype.Service;
-import model.article.Article;
-import model.product.Product;
-import model.product.SimpleProduct;
-import java.util.Collection;
-import java.util.Map;
-import java.util.UUID;
+import org.skypro.skyshop.model.article.Article;
+import org.skypro.skyshop.model.product.Product;
+import org.skypro.skyshop.model.product.SimpleProduct;
+
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+
 
 @Service
 public class StorageService {
@@ -72,12 +73,26 @@ public class StorageService {
         articlesStorage.put(articleId7, new Article("А", "А", articleId7));
     }
 
-
     public Collection<Product> getAllProducts() {
         return productsStorage.values();
     }
 
     public Collection<Article> getAllArticles() {
         return articlesStorage.values();
+    }
+
+    public Collection<Searchable> getAllSearchable() {
+
+        List<Searchable> allSearchable = new ArrayList<>();
+
+        for (Product product : productsStorage.values()) {
+            allSearchable.add(product);
+        }
+
+        for (Article article : articlesStorage.values()) {
+            allSearchable.add(article);
+        }
+
+        return allSearchable;
     }
 }
