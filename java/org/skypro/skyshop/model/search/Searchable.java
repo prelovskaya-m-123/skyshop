@@ -1,4 +1,6 @@
-package model.search;
+package org.skypro.skyshop.model.search;
+
+import java.util.UUID;
 
 public interface Searchable {
 
@@ -8,7 +10,10 @@ public interface Searchable {
 
     String getName();
 
+    UUID getId();
+
     default String getStringRepresentation() {
         return getName() + " — " + getContentType();
     }
+
 }

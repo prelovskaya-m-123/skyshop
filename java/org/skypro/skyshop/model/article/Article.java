@@ -1,15 +1,19 @@
-package model.article;
+package org.skypro.skyshop.model.article;
 
-import model.search.Searchable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.skypro.skyshop.model.search.Searchable;
 
 import java.util.Objects;
+import java.util.UUID;
+
 
 public final class Article implements Searchable {
 
     private final String title;
     private final String articleText;
+    private final UUID id;
 
-    public Article(String title, String articleText) {
+    public Article(String title, String articleText, UUID id) {
 
         if (title == null || articleText == null) {
             throw new IllegalArgumentException("Название и текст не могут быть null");
@@ -17,6 +21,12 @@ public final class Article implements Searchable {
 
         this.title = title;
         this.articleText = articleText;
+        this.id = id;
+    }
+
+    @Override
+    public UUID getId() {
+        return id;
     }
 
     @Override
@@ -25,11 +35,12 @@ public final class Article implements Searchable {
     }
 
     @Override
+    @JsonIgnore
     public String getContentType() {
         return "ARTICLE";
     }
 
-
+    @Override
     public String getName() {
         return title;
     }
