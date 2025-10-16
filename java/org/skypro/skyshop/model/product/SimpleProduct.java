@@ -29,8 +29,4 @@ public class SimpleProduct extends Product {
         return false;
     }
 
-    @Override
-    public UUID getId() {
-        return super.getId();
-    }
 }

@@ -13,12 +13,12 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class StorageService {
 
-    private final Map<UUID, Product> productsStorage;
+    private final Map<UUID, Product> availableProducts;
 
     private final Map<UUID, Article> articlesStorage;
 
     public StorageService() {
-        this.productsStorage = new ConcurrentHashMap<>();
+        this.availableProducts = new ConcurrentHashMap<>();
         this.articlesStorage = new ConcurrentHashMap<>();
 
         fillWithTestData();
@@ -26,23 +26,23 @@ public class StorageService {
 
     private void fillWithTestData() {
         UUID productId1 = UUID.randomUUID();
-        productsStorage.put(productId1,
+        availableProducts.put(productId1,
                 new SimpleProduct("Школьный рюкзак Brauberg Premium", 5200, productId1));
 
         UUID productId2 = UUID.randomUUID();
-        productsStorage.put(productId2,
+        availableProducts.put(productId2,
                 new SimpleProduct("Мешок для сменной обуви", 290, productId2));
 
         UUID productId3 = UUID.randomUUID();
-        productsStorage.put(productId3,
+        availableProducts.put(productId3,
                 new SimpleProduct("Смартфон Realme Note 50", 5320 , productId3));
 
         UUID productId4 = UUID.randomUUID();
-        productsStorage.put(productId4,
+        availableProducts.put(productId4,
                 new SimpleProduct("Пауэрбанк Xiaomi Mi Power Bank 3", 2490, productId4));
 
         UUID productId5 = UUID.randomUUID();
-        productsStorage.put(productId5,
+        availableProducts.put(productId5,
                 new SimpleProduct("Школьный костюм для мальчика", 3700, productId5));
 
 
@@ -73,8 +73,12 @@ public class StorageService {
         articlesStorage.put(articleId7, new Article("А", "А", articleId7));
     }
 
+    public Optional<Product> getProductById(UUID id) {
+        return Optional.ofNullable(availableProducts.get(id));
+    }
+
     public Collection<Product> getAllProducts() {
-        return productsStorage.values();
+        return availableProducts.values();
     }
 
     public Collection<Article> getAllArticles() {
@@ -84,15 +88,8 @@ public class StorageService {
     public Collection<Searchable> getAllSearchable() {
 
         List<Searchable> allSearchable = new ArrayList<>();
-
-        for (Product product : productsStorage.values()) {
-            allSearchable.add(product);
-        }
-
-        for (Article article : articlesStorage.values()) {
-            allSearchable.add(article);
-        }
-
+        allSearchable.addAll(availableProducts.values());
+        allSearchable.addAll(articlesStorage.values());
         return allSearchable;
     }
 }

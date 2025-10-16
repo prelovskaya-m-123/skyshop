@@ -1,14 +1,10 @@
 package org.skypro.skyshop.service;
 
 import org.skypro.skyshop.model.SearchResult;
-import org.skypro.skyshop.model.article.Article;
-import org.skypro.skyshop.model.product.Product;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
