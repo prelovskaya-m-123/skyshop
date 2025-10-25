@@ -1,5 +1,6 @@
 package org.skypro.skyshop.service;
 
+import org.skypro.skyshop.exception.NoSuchProductException;
 import org.skypro.skyshop.model.search.Searchable;
 import org.springframework.stereotype.Service;
 import org.skypro.skyshop.model.article.Article;
@@ -73,8 +74,11 @@ public class StorageService {
         articlesStorage.put(articleId7, new Article("А", "А", articleId7));
     }
 
-    public Optional<Product> getProductById(UUID id) {
-        return Optional.ofNullable(availableProducts.get(id));
+    public Product getProductById(UUID id) {
+        if (!availableProducts.containsKey(id)) {
+            throw new NoSuchProductException("Продукт с ID " + id + " не найден");
+        }
+        return availableProducts.get(id);
     }
 
     public Collection<Product> getAllProducts() {

@@ -4,6 +4,7 @@ import org.skypro.skyshop.model.SearchResult;
 import org.skypro.skyshop.model.basket.UserBasket;
 import org.skypro.skyshop.service.BasketService;
 import org.skypro.skyshop.service.SearchService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,14 +45,11 @@ public class ShopController {
     }
 
     @GetMapping("/basket/{id}")
-    public String addProduct(@PathVariable("id") UUID id) {
-        try {
+    public ResponseEntity<String> addProduct(@PathVariable("id") UUID id) {
             basketService.addProductToBasket(id);
-            return "Продукт успешно добавлен";
-        } catch (IllegalArgumentException e) {
-            return "Ошибка: " + e.getMessage();
-        }
+            return ResponseEntity.ok("Продукт успешно добавлен");
     }
+
 
     @GetMapping("/basket")
     public UserBasket getUserBasket() {
