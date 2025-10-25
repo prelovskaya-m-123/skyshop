@@ -54,9 +54,5 @@ public class DiscountedProduct extends Product {
         return "<" + getName() + ">" + ":" + "<" + getPrice() + ">" + "(" + "<" + discountInWholePercentages + ">" + "%" + ")";
     }
 
-    @Override
-    public UUID getId() {
-        return super.getId();
-    }
 }
 
