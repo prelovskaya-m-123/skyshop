@@ -24,14 +24,10 @@ public class BasketService {
     }
 
     public void addProductToBasket(UUID productId) {
-        Optional<Product> product = storageService.getProductById(productId);
-
-        if (!product.isPresent()) {
-            throw new IllegalArgumentException("Продукт с ID " + productId + " не найден");
-        }
-
+        Product product = storageService.getProductById(productId);
         productBasket.addProduct(productId);
     }
+
 
     public UserBasket getUserBasket() {
         Map<UUID, Integer> productsMap = productBasket.getProducts();
@@ -40,14 +36,8 @@ public class BasketService {
                 .map(entry -> {
                     UUID productId = entry.getKey();
                     int quantity = entry.getValue();
-
-                    Optional<Product> productOptional = storageService.getProductById(productId);
-
-                    if (!productOptional.isPresent()) {
-                        throw new IllegalStateException("Продукт с ID " + productId + " был удален из хранилища");
-                    }
-
-                    return new BasketItem(productOptional.get(), quantity);
+                    Product product = storageService.getProductById(productId);
+                    return new BasketItem(product, quantity);
                 })
                 .collect(Collectors.toList());
 
