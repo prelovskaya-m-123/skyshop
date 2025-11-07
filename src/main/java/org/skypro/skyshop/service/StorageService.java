@@ -106,12 +106,9 @@ public class StorageService {
     }
 
     private Item convertToItem(Searchable searchable) {
-        if (searchable instanceof Product product) {
-            return new Item(product.getId().toString(), product.getName());
-        } else if (searchable instanceof Article article) {
-            return new Item(article.getId().toString(), article.getName());
+        return new Item(
+                searchable.getId().toString(),
+                searchable.getName()
+        );
         }
-        throw new IllegalArgumentException(
-                "Неподдерживаемый тип Searchable: " + searchable.getClass().getName());
-    }
-}
+      }

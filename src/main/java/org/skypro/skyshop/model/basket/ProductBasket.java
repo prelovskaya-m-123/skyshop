@@ -6,13 +6,12 @@ import org.springframework.web.context.annotation.SessionScope;
 import org.skypro.skyshop.model.product.Product;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 @SessionScope
 public class ProductBasket {
 
-    private final Map<UUID, List<Product>> userBaskets = new ConcurrentHashMap<>();
+    private final Map<UUID, List<Product>> userBaskets = new HashMap<>();
 
     public boolean containsProduct(UUID userId, UUID productId) {
         return userBaskets.getOrDefault(userId, Collections.emptyList())

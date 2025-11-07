@@ -34,7 +34,7 @@ public class SearchService {
     }
 
     public Optional<Item> searchByName(String searchTerm) {
-        if (searchTerm == null || searchTerm.trim().isEmpty()) {
+        if (searchTerm == null || searchTerm.trim().isBlank()) {
             return Optional.empty();
         }
 
