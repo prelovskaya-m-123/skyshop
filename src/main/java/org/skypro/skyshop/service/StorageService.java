@@ -1,6 +1,7 @@
 package org.skypro.skyshop.service;
 
 import org.skypro.skyshop.exception.NoSuchProductException;
+import org.skypro.skyshop.model.Item;
 import org.skypro.skyshop.model.search.Searchable;
 import org.springframework.stereotype.Service;
 import org.skypro.skyshop.model.article.Article;
@@ -9,6 +10,7 @@ import org.skypro.skyshop.model.product.SimpleProduct;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -96,4 +98,17 @@ public class StorageService {
         allSearchable.addAll(articlesStorage.values());
         return allSearchable;
     }
-}
+
+    public List<Item> findAll() {
+        return getAllSearchable().stream()
+                .map(this::convertToItem)
+                .collect(Collectors.toList());
+    }
+
+    private Item convertToItem(Searchable searchable) {
+        return new Item(
+                searchable.getId().toString(),
+                searchable.getName()
+        );
+        }
+      }

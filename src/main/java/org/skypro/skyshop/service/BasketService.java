@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -25,20 +24,15 @@ public class BasketService {
 
     public void addProductToBasket(UUID productId) {
         Product product = storageService.getProductById(productId);
-        productBasket.addProduct(productId);
+        productBasket.addProduct(productId, product);
     }
 
+    // ИЗМЕНЕНО: добавлен параметр userId
+    public UserBasket getUserBasket(UUID userId) {
+        List<Product> products = productBasket.getProducts(userId);
 
-    public UserBasket getUserBasket() {
-        Map<UUID, Integer> productsMap = productBasket.getProducts();
-
-        List<BasketItem> basketItems = productsMap.entrySet().stream()
-                .map(entry -> {
-                    UUID productId = entry.getKey();
-                    int quantity = entry.getValue();
-                    Product product = storageService.getProductById(productId);
-                    return new BasketItem(product, quantity);
-                })
+        List<BasketItem> basketItems = products.stream()
+                .map(product -> new BasketItem(product, 1))
                 .collect(Collectors.toList());
 
         return new UserBasket(basketItems);
